@@ -1,0 +1,331 @@
+/* ==========================================================================
+   Design tokens
+   Native-iOS-inspired: system font stack, iOS grouped-background greys,
+   a single confident accent (deep emerald — money, growth, "go").
+   ========================================================================== */
+:root {
+  --color-bg-dim: rgba(0, 0, 0, 0.38);
+  --color-sheet-bg: #ffffff;
+  --color-grouped-bg: #f2f2f7;      /* iOS systemGroupedBackground */
+  --color-text-primary: #1c1c1e;
+  --color-text-secondary: #8e8e93;
+  --color-text-tertiary: #c7c7cc;
+  --color-hairline: rgba(60, 60, 67, 0.12);
+  --color-accent: #1b7a5e;          /* deep emerald */
+  --color-accent-soft: #e6f2ee;
+  --color-accent-press: #145f49;
+  --color-danger: #ff3b30;
+
+  --radius-sheet: 20px;
+  --radius-lg: 16px;
+  --radius-md: 14px;
+  --radius-pill: 999px;
+
+  --shadow-sheet: 0 -8px 40px rgba(0, 0, 0, 0.18);
+
+  --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-system);
+  background: var(--color-grouped-bg);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+}
+
+/* ==========================================================================
+   Backdrop — a sliver of dimmed "page beneath" so the sheet reads as a
+   sheet, even though there is nothing else in this app.
+   ========================================================================== */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--color-bg-dim);
+}
+
+/* ==========================================================================
+   The bottom sheet
+   ========================================================================== */
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--color-sheet-bg);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  box-shadow: var(--shadow-sheet);
+  padding: 10px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  max-height: 92vh;
+  overflow-y: auto;
+
+  /* Slide-up entrance */
+  transform: translateY(100%);
+  animation: sheet-in 0.46s var(--ease-spring) forwards;
+}
+
+@keyframes sheet-in {
+  to { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet { animation: none; transform: translateY(0); }
+}
+
+.grabber {
+  width: 36px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--color-text-tertiary);
+  margin: 8px auto 6px;
+}
+
+.sheet-header {
+  text-align: center;
+  padding: 4px 0 8px;
+}
+
+.sheet-header h1 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   Amount field — the signature element. Huge, centered, borderless,
+   with a quiet focus ring instead of a boxed input.
+   ========================================================================== */
+.amount-field {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  padding: 22px 0 26px;
+}
+
+.currency-symbol {
+  font-size: 34px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.amount-field input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font-system);
+  font-size: 56px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  width: 100%;
+  max-width: 260px;
+  text-align: left;
+  -moz-appearance: textfield;
+}
+
+.amount-field input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.amount-field input::-webkit-outer-spin-button,
+.amount-field input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ==========================================================================
+   Field groups (buckets / merchant / notes)
+   ========================================================================== */
+.field-group {
+  margin-bottom: 14px;
+}
+
+/* Buckets — rounded selectable chips, not a dropdown */
+.buckets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.bucket-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-hairline);
+  background: var(--color-grouped-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-system);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s var(--ease-spring), color 0.15s var(--ease-spring),
+    border-color 0.15s var(--ease-spring), transform 0.1s var(--ease-spring);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.bucket-chip:active {
+  transform: scale(0.96);
+}
+
+.bucket-chip.selected {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.bucket-chip .emoji {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.buckets-empty,
+.buckets-error {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  padding: 6px 2px;
+}
+
+.buckets-error {
+  color: var(--color-danger);
+}
+
+/* Text inputs */
+.text-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-hairline);
+  background: var(--color-grouped-bg);
+  font-family: var(--font-system);
+  font-size: 16px;
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.text-input::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.text-input:focus {
+  border-color: var(--color-accent);
+  background: #ffffff;
+}
+
+/* ==========================================================================
+   Save button
+   ========================================================================== */
+.save-btn {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent);
+  color: #ffffff;
+  font-family: var(--font-system);
+  font-size: 17px;
+  font-weight: 600;
+  padding: 17px 0;
+  margin-top: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.1s var(--ease-spring), background 0.15s ease, opacity 0.15s ease;
+}
+
+.save-btn:active {
+  transform: scale(0.98);
+  background: var(--color-accent-press);
+}
+
+.save-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+
+.save-btn-spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  animation: spin 0.7s linear infinite;
+}
+
+.save-btn.loading .save-btn-spinner {
+  display: inline-block;
+}
+
+.save-btn.loading .save-btn-label {
+  opacity: 0.85;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Toast confirmation
+   ========================================================================== */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 16px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(28, 28, 30, 0.92);
+  color: #ffffff;
+  font-family: var(--font-system);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s var(--ease-spring);
+  z-index: 20;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.toast-check {
+  color: #34d399;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Small screens
+   ========================================================================== */
+@media (max-width: 360px) {
+  .amount-field input { font-size: 46px; }
+  .currency-symbol { font-size: 28px; }
+}

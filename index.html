@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" />
+  <title>Expenses</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1B7A5E" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Expenses" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Dimmed backdrop behind the sheet, like a native iOS modal presentation -->
+  <div class="backdrop"></div>
+
+  <!-- The bottom sheet IS the app. No pages, no nav. -->
+  <main class="sheet" id="sheet">
+    <div class="grabber"></div>
+
+    <header class="sheet-header">
+      <h1>Add Expense</h1>
+    </header>
+
+    <form id="expense-form" class="expense-form" autocomplete="off">
+
+      <!-- Amount: the most important field, huge, autofocused -->
+      <div class="amount-field">
+        <span class="currency-symbol">₹</span>
+        <input
+          type="number"
+          inputmode="decimal"
+          step="0.01"
+          min="0"
+          id="amount"
+          name="amount"
+          placeholder="0"
+          required
+        />
+      </div>
+
+      <!-- Buckets: rounded selectable chips, single-select, loaded from Sheet -->
+      <div class="field-group">
+        <div class="buckets" id="buckets" role="radiogroup" aria-label="Category">
+          <!-- injected by app.js -->
+        </div>
+      </div>
+
+      <!-- Optional fields -->
+      <div class="field-group">
+        <input
+          type="text"
+          id="merchant"
+          name="merchant"
+          class="text-input"
+          placeholder="Merchant (optional)"
+        />
+      </div>
+
+      <div class="field-group">
+        <input
+          type="text"
+          id="notes"
+          name="notes"
+          class="text-input"
+          placeholder="Notes (optional)"
+        />
+      </div>
+
+      <button type="submit" class="save-btn" id="save-btn">
+        <span class="save-btn-label">Save Expense</span>
+        <span class="save-btn-spinner" aria-hidden="true"></span>
+      </button>
+    </form>
+  </main>
+
+  <!-- Toast confirmation -->
+  <div class="toast" id="toast">
+    <span class="toast-check">✓</span>
+    <span id="toast-text">Expense Saved</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
