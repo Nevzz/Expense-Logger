@@ -1,4 +1,4 @@
-# Expense Logger - Nev
+# Expense Logger - Nevzz
 
 A minimal, fast expense logger for iPhone. Open the app, a bottom sheet slides
 up, enter an amount, pick a category, tap **Save Expense** — done. No pages,
