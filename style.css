@@ -1,27 +1,30 @@
 /* ==========================================================================
    Design tokens
-   Native-iOS-inspired: system font stack, iOS grouped-background greys,
-   a single confident accent (deep emerald — money, growth, "go").
+   Native-iOS-inspired: system font stack, iOS dark-mode greys (Settings-app
+   style layering — near-black page, dark-grey sheet, lighter-grey elevated
+   controls), with a single confident accent (bright emerald — money, growth, "go").
    ========================================================================== */
 :root {
-  --color-bg-dim: rgba(0, 0, 0, 0.38);
-  --color-sheet-bg: #ffffff;
-  --color-grouped-bg: #f2f2f7;      /* iOS systemGroupedBackground */
-  --color-text-primary: #1c1c1e;
-  --color-text-secondary: #8e8e93;
-  --color-text-tertiary: #c7c7cc;
-  --color-hairline: rgba(60, 60, 67, 0.12);
-  --color-accent: #1b7a5e;          /* deep emerald */
-  --color-accent-soft: #e6f2ee;
-  --color-accent-press: #145f49;
-  --color-danger: #ff3b30;
+  --color-bg-dim: rgba(0, 0, 0, 0.6);
+  --color-page-bg: #000000;         /* the "page" behind the sheet */
+  --color-sheet-bg: #1c1c1e;        /* iOS secondarySystemGroupedBackground, dark */
+  --color-grouped-bg: #2c2c2e;      /* iOS tertiarySystemGroupedBackground, dark — used for chips/inputs */
+  --color-input-focus-bg: #3a3a3c;  /* one step lighter, for focused inputs */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #98989d;  /* iOS secondaryLabel, dark */
+  --color-text-tertiary: #636366;   /* iOS tertiaryLabel, dark */
+  --color-hairline: rgba(255, 255, 255, 0.14);
+  --color-accent: #30d180;          /* bright emerald — punchier so it holds up on dark grey */
+  --color-accent-soft: rgba(48, 209, 128, 0.18);
+  --color-accent-press: #279e63;
+  --color-danger: #ff453a;          /* iOS systemRed, dark */
 
   --radius-sheet: 20px;
   --radius-lg: 16px;
   --radius-md: 14px;
   --radius-pill: 999px;
 
-  --shadow-sheet: 0 -8px 40px rgba(0, 0, 0, 0.18);
+  --shadow-sheet: 0 -8px 40px rgba(0, 0, 0, 0.5);
 
   --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -41,7 +44,7 @@ html, body {
 
 body {
   font-family: var(--font-system);
-  background: var(--color-grouped-bg);
+  background: var(--color-page-bg);
   color: var(--color-text-primary);
   overflow: hidden;
   position: fixed;
@@ -97,7 +100,9 @@ body {
 }
 
 .sheet-header {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 4px 0 8px;
 }
 
@@ -106,6 +111,30 @@ body {
   font-weight: 600;
   margin: 0;
   letter-spacing: -0.01em;
+}
+
+.header-spacer {
+  width: 32px;
+  height: 32px;
+}
+
+.header-icon-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-grouped-bg);
+  text-decoration: none;
+  font-size: 15px;
+  flex-shrink: 0;
+  transition: transform 0.1s var(--ease-spring), background 0.15s ease;
+}
+
+.header-icon-btn:active {
+  transform: scale(0.92);
+  background: var(--color-accent-soft);
 }
 
 /* ==========================================================================
@@ -194,9 +223,20 @@ body {
   color: #ffffff;
 }
 
-.bucket-chip .emoji {
-  font-size: 16px;
-  line-height: 1;
+.bucket-chip .chip-icon {
+  display: inline-flex;
+  color: var(--color-text-secondary);
+  transition: color 0.15s var(--ease-spring);
+}
+
+.bucket-chip .chip-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.bucket-chip.selected .chip-icon {
+  color: #ffffff;
 }
 
 .buckets-empty,
@@ -230,7 +270,7 @@ body {
 
 .text-input:focus {
   border-color: var(--color-accent);
-  background: #ffffff;
+  background: var(--color-input-focus-bg);
 }
 
 /* ==========================================================================
@@ -294,7 +334,7 @@ body {
 .toast {
   position: fixed;
   left: 50%;
-  bottom: 24px;
+  bottom: var(--toast-bottom, 24px);
   transform: translate(-50%, 16px);
   display: flex;
   align-items: center;
