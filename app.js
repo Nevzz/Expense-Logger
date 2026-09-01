@@ -12,12 +12,12 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. Config — edit these two values after deploying google-apps-script.gs
+   1. Config — edit this after deploying google-apps-script.gs
    -------------------------------------------------------------------------- */
 const CONFIG = {
   // The Web App URL you get after deploying google-apps-script.gs
   // (Deploy > Manage deployments > Web app). Must end in /exec.
-  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwYLQJ9wU960BWfDvrH5Smdt0zFLYc3RiaJgNjPK9qVfKNuLo_NCgpm3EF_qY6p5VQK/exec",
+  SCRIPT_URL: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE",
 
   // Cache bucket names locally so the sheet opens instantly on repeat visits.
   BUCKETS_CACHE_KEY: "expenseLogger.buckets.v1",
@@ -78,7 +78,7 @@ function init() {
    -------------------------------------------------------------------------- */
 async function loadBuckets() {
   try {
-    const url = `${CONFIG.SCRIPT_URL}?action=getBuckets&token=${encodeURIComponent(CONFIG.API_TOKEN)}`;
+    const url = `${CONFIG.SCRIPT_URL}?action=getBuckets`;
     const res = await fetch(url, { method: "GET" });
     const data = await res.json();
 
@@ -203,7 +203,6 @@ async function handleSubmit(e) {
 
   const payload = {
     action: "addExpense",
-    token: CONFIG.API_TOKEN,
     amount: amount,
     bucket: selectedBucket,
     merchant: els.merchant.value.trim(),
