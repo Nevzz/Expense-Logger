@@ -17,7 +17,7 @@
 const CONFIG = {
   // The Web App URL you get after deploying google-apps-script.gs
   // (Deploy > Manage deployments > Web app). Must end in /exec.
-  SCRIPT_URL: "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE",
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwYLQJ9wU960BWfDvrH5Smdt0zFLYc3RiaJgNjPK9qVfKNuLo_NCgpm3EF_qY6p5VQK/exec",
 
   // Cache bucket names locally so the sheet opens instantly on repeat visits.
   BUCKETS_CACHE_KEY: "expenseLogger.buckets.v1",
