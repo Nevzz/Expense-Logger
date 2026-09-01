@@ -17,7 +17,7 @@
 const CONFIG = {
   // Paste the Web App URL you get after deploying google-apps-script.gs
   // (Deploy > New deployment > Web app). See README.md for the full steps.
-  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxLsUz6WnWxckits9jZUxOdsNg5IICuNsGJC382EgwAprL77o4gIKiGoYSH3zqnP_ak/exec",
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwYLQJ9wU960BWfDvrH5Smdt0zFLYc3RiaJgNjPK9qVfKNuLo_NCgpm3EF_qY6p5VQK/exec",
 
   // Cache bucket names locally so the sheet opens instantly on repeat visits,
   // even before the network call to Google Sheets resolves.
