@@ -4,7 +4,7 @@
  * bucket lists and saves always go live.
  */
 
-const CACHE_NAME = "expense-logger-shell-v1";
+const CACHE_NAME = "expense-logger-shell-v6";
 const SHELL_FILES = [
   "./index.html",
   "./style.css",
