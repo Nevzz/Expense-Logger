@@ -104,7 +104,7 @@ function renderBuckets(bucketNames) {
     chip.setAttribute("role", "radio");
     chip.setAttribute("aria-checked", "false");
     chip.dataset.bucket = name;
-    chip.innerHTML = `<span class="emoji">${bucketEmoji(name)}</span><span>${escapeHtml(name)}</span>`;
+    #chip.innerHTML = `<span class="emoji">${bucketEmoji(name)}</span><span>${escapeHtml(name)}</span>`;
     chip.addEventListener("click", () => selectBucket(name));
     els.buckets.appendChild(chip);
   });
